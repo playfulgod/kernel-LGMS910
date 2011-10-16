@@ -1,0 +1,174 @@
+config MACH_LGE
+	bool
+
+menu "LGE Diag & Test Specific"
+
+config LGE_SUPPORT_RAPI
+        tristate "Support LGE RAPI"
+        default n
+        depends on MACH_LGE
+        help
+          LGE remote api functions
+
+config LGE_DIAGTEST
+        tristate "Support LGE diag test mode"
+        default n
+        depends on MACH_LGE
+        select LGE_SUPPORT_RAPI
+        help
+          LGE diag test mode
+
+config LGE_SUPPORT_AT_CMD
+        bool "Support LGE AT_CMD system"
+        default n
+        depends on MACH_LGE
+        help
+         LGE AT_CMD Support
+
+config LGE_DIAG_WMC
+        bool "Support LGE diag WMC"
+        default n
+        depends on LGE_DIAGTEST
+        help
+          LGE diag WMC enable
+
+config LGE_ATS_INPUT_DEVICE
+        bool "Support LGE ATS input device"
+        default n
+        depends on MACH_LGE
+        help
+         Choose if use ATS input device used for generating input event from user space
+
+config LGE_ERI_DOWNLOAD
+	bool "LGE ERI DOWNLOAD"
+	depends on MACH_LGE_BRYCE
+	default n
+	help
+	  /data/eri/eri.bin file download, will be done if modem diag receives the write command.
+
+#neo.kang@lge.com	10.12.15. S
+#0012867 : [kernel] add the hidden reset
+config LGE_HIDDEN_RESET_PATCH
+        bool "Support LGE hidden reset function"
+        default n
+        depends on MACH_LGE_BRYCE
+        depends on ANDROID_RAM_CONSOLE
+        help
+          LGE hidden reset function
+#neo.kang@lge.com	10.12.15. E
+
+# LGE_CHANGE_S [jaeho.cho@lge.com] 2010-06-22, LG_FW_ANDROID_USB_GADGET
+config LGE_USB_GADGET_SUPPORT_FACTORY_USB
+	tristate "USB Gadget Support LGE Factory USB"
+	depends on USB_GADGET
+	help
+	  Supports LG USB driver
+	
+	default n
+
+# LGE_CHANGE_S [jaeho.cho@lge.com] 2010-06-22, LG_FW_ANDROID_USB_GADGET
+
+config LGE_PCB_VERSION
+	bool "Support LGE PCB Version RAPI"
+	default n 
+	depends on MACH_LGE
+	help
+	 Choose if use PCB Version RAPI
+
+
+config LGE_SYNC_CMD
+	bool "Support LGE sync request"
+	default n 
+	depends on MACH_LGE
+	help
+	 sync request command
+
+config LGE_EMMC_SUPPORT
+	bool "Support LGE eMMC related operations"
+	default n 
+	depends on MACH_LGE
+	help
+	 eMMC read / write operations
+
+config LGE_BOOTCOMPLETE_INFO
+	bool "Support LGE boot complete check"
+	default n 
+	depends on MACH_LGE
+	help
+	 boot complete notification command
+
+config LGE_CHARGING_MODE_INFO
+	bool "Support LGE charging mode check"
+	default n 
+	depends on MACH_LGE
+	help
+	 charging mode notification command
+
+config LGE_RAM_CONSOLE
+	bool "Support kmsg save in the ram console area"
+	default n
+	depends on MACH_LGE
+	help
+	  Support kmsg save
+
+config LGE_RAM_CONSOLE_CLEAN
+	bool "Clean ram console"
+	default n
+	help
+	  Clean ram console when powered off normally
+
+config LGE_ERS
+	tristate "Support LGE ERS system"
+	default n
+	depends on LGE_RAM_CONSOLE
+	help
+	  LGE error reporting system
+
+config LGE_LTE_ERS
+        bool "Support LGE LTE ERS"
+        default n
+        depends on LTE
+        depends on LGE_ERS
+        help
+          LGE LTE crash log enable
+
+config LGE_LTE_USB_SWITCH_REQUEST
+	bool "LGE LTE USB SWITCHING REQUEST"
+	depends on LGE_LTE_ERS
+	default n
+	help
+	  Support LTE USB switching in case LTE crash
+
+config LGE_DLOAD_RESET_BOOT_UP
+	bool "Support LGE dload reset check"
+	default n 
+	depends on MACH_LGE
+	help
+	 incase dload reset, do not go into the charging mode
+
+config LGE_FOTA_MISC_INFO
+	bool "Support information that is required for FOTA"
+	default n 
+	depends on MACH_LGE
+	help
+	 support SW version, MIN, etc
+
+config LGE_MANUAL_MODE_TEST
+	bool "sys file for manual mode test nv"
+	default n 
+	depends on LGE_DIAGTEST
+	help
+	 set manual test nv value on the sys file and this will be set
+	 while boot-up and will be used in the user space
+
+config LGE_KERNEL_SYSTEM_STATE
+	depends on MACH_LGE_BRYCE_MS910
+	default n
+	bool "kernel shutdown or reset detection"
+	help
+	  if some operations like rpc or kjournal are called while shoutdown or reset,
+	  kernel crash might be occured as kernel will be waiting with for loop
+	  This is odd because device and sysdev has already been shutdown.
+
+
+endmenu

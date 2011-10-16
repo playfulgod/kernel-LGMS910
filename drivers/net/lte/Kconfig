@@ -1,0 +1,13 @@
+config LTE
+	tristate "LTE modem support"
+	default y
+	---help---
+	  This is a driver for LGE LTE Chipset.
+#TELECA_NETMGR_DHCP START
+config LGE_L2K_ETH
+	tristate "LGE L2000 Virtual Network Device"
+	depends on ARCH_MSM
+	default y
+#TELECA_NETMGR_DHCP END
+#	help
+#	  Virtual ethernet interface for LGE L2000 LTE modem
