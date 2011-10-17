@@ -1,0 +1,19 @@
+Instructions:
+
+First edit the path in the build-kernel.sh, build-modules.sh, and build-module-install.sh to the path of your files and CM repo.
+
+Second, edit the defconfig to what your named your defconfig, or just use mine. ;)
+
+Then run the follow to compile the kernel:
+
+ ./build-kernel.sh
+
+To build the modules run:
+
+ ./build-modules.sh
+
+And to install the modules to the path you created and edited in the build-modules-install.sh:
+
+ ./build-modules-install.sh
+
+ 

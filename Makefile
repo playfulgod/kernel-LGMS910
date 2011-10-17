@@ -4,6 +4,11 @@ SUBLEVEL = 35
 EXTRAVERSION = .7
 NAME = Yokohama
 
+export TARGET_PRODUCT=lge_bryce
+export BUILD_LG_HW_MS910_REV=5
+export TARGET_BUILD_VARIANT=user
+export TARGET_LTE_IMAGE=persist
+
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
 # More info can be located in ./README
