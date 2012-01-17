@@ -15,7 +15,7 @@ ARCH=arm CROSS_COMPILE=~/Android/CMR/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3
 if [ -f arch/arm/boot/zImage ]; then
       echo "Plague has been compiled!!! You can find it in arcg/arm/boot/zImage"
 else
-      echo "Compile did not compile, please check for errors!!"
+      echo "Kernel did not compile, please check for errors!!"
 fi
 
 
@@ -26,7 +26,7 @@ fi
 #case "target" in
 #      "arch/arm/boot/zImage")
 #   echo "Plague has been compiled! You can find it in: arch/arm/boot/zImage"
-	;;
+#	;;
 
 #esac
 
