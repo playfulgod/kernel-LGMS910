@@ -107,8 +107,6 @@
 	    {  93, 1, 3, 0 }, /* 1804 Mhz */
 	    {  98, 1, 3, 0 }, /* 1900 Mhz */
 	    { 101, 1, 3, 0 }, /* 2016 Mhz */ 
-	    { 106, 1, 3, 0 }, /* 2116 Mhz */
-	    { 111, 1, 3, 0 }, /* 2208 Mhz */
     };
      
     /* Use negative numbers for sources that can't be enabled/disabled */
@@ -143,8 +141,6 @@
             { 1, 1804800, PLL_2, 3, 0, UINT_MAX, 1375, VDD_RAW(1375), &pll2_tbl[9]},
             { 1, 1900800, PLL_2, 3, 0, UINT_MAX, 1400, VDD_RAW(1400), &pll2_tbl[10]},
             { 1, 2016000, PLL_2, 3, 0, UINT_MAX, 1425, VDD_RAW(1425), &pll2_tbl[11]},
-            { 1, 2112000, PLL_2, 3, 0, UINT_MAX, 1450, VDD_RAW(1450), &pll2_tbl[12]},
-            { 1, 2208000, PLL_2, 3, 0, UINT_MAX, 1475, VDD_RAW(1475), &pll2_tbl[13]},
             { 0 }
     };
      
