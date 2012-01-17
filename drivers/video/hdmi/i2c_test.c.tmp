@@ -1,0 +1,114 @@
+#include <linux/module.h>
+#include <linux/init.h>
+#include <linux/platform_device.h>
+#include <linux/kernel.h>
+#include <linux/delay.h>
+#include <linux/gpio.h>
+#include <mach/board-lge.h>
+
+#include <linux/fs.h>          
+#include <linux/errno.h>       
+#include <linux/types.h>       
+#include <linux/fcntl.h>       
+#include <linux/i2c.h>
+
+#include <asm/uaccess.h>
+#include <asm/io.h>
+
+#define   RDWR_DEV_MAJOR            236
+static const char rdwrdev[] = "rdwrdev";
+struct i2c_client *my_client;
+
+int rdwr_open (struct inode *inode, struct file *filp)
+{
+	printk("[jaeseong.gim]: %s\n",__func__);
+	return 0;
+}
+
+ssize_t rdwr_read(struct file *filp, char *buf, size_t count, loff_t *f_pos)
+{
+	int status;
+	u8 ret;
+
+	if (my_client == NULL) { 	/* No global client pointer? */
+		printk("[jaeseong.gim]:client is null\n");
+		return -1;
+	}
+
+	if ((ret = i2c_smbus_read_byte_data(my_client, (u8)count)) >= 0) {
+		put_user((unsigned char)ret, (char *) &buf[0] ); 
+		status = 0;
+	} else {
+		status = -EIO;
+		printk("[jaeseong.gim]:%s:read_error\n",__func__);
+	}
+
+	return status;
+}
+
+ssize_t rdwr_write (struct file *filp, const char *buf, size_t count, loff_t *f_pos)
+{
+	int ret;
+	int status;
+	u8 val;
+
+	if (my_client == NULL) {/* No global client pointer? */
+		printk("[jaeseong.gim]:client is null\n");
+		return -1;
+	}
+
+	get_user(val, (char *) buf ); 
+	ret = i2c_smbus_write_byte_data(my_client, (u8)count, val);
+	if (ret == 0) {
+		status = 0;
+	} else {
+		status = -EIO;
+		printk("[jaeseong.gim]:fail to write(reg=0x%x,val=0x%x)\n", (u8)count, val);
+	}
+
+	return status;
+}
+
+ssize_t rdwr_llseek(struct file *filp, loff_t f_pos, int newpos)
+{
+	if(newpos)
+		my_client=(struct i2c_client*)f_pos;
+	else
+		my_client->addr=(int) f_pos;
+	return 0;
+}
+
+int rdwr_release (struct inode *inode, struct file *filp)
+{
+	return 0;
+}
+
+struct file_operations rdwr_fops =
+{
+	.owner    = THIS_MODULE,
+	.read     = rdwr_read,     
+	.write    = rdwr_write,    
+	.open     = rdwr_open,     
+	.llseek   = rdwr_llseek,
+	.release  = rdwr_release,  
+};
+
+static int __init rdwr_init(void)
+{
+	int result;
+
+	result = register_chrdev( RDWR_DEV_MAJOR,rdwrdev , &rdwr_fops);
+	if (result < 0) return result;
+
+	return 0;
+}
+
+static void __exit rdwr_exit(void)
+{
+	unregister_chrdev( RDWR_DEV_MAJOR, rdwrdev );
+}
+
+module_init(rdwr_init);
+module_exit(rdwr_exit);
+
+MODULE_LICENSE("GPL");
