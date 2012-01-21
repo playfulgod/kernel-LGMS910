@@ -11,4 +11,8 @@ make ARCH=arm plague_defconfig
 echo "Now compiling kernel, go get a soda! ;)"
 ARCH=arm CROSS_COMPILE=~/Android/CM9/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi- make zImage -j4
 #
-echo "Plague has been compiled! You can find it in: arch/arm/boot/zImage"
+if [ -f arch/arm/boot/zImage ]; then
+      echo "Plague has been compiled!!! You can find it in arcg/arm/boot/zImage"
+else
+      echo "Kernel did not compile, please check for errors!!"
+fi
