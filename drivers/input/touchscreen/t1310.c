@@ -164,7 +164,7 @@ void Send_Touch( unsigned int x, unsigned int y)
 			input_report_abs(touch_pdev->input_dev, ABS_MT_TOUCH_MAJOR, 1);
 			input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_X, x);
 			input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_Y, y);
-			input_report_abs(touch_pdev->input_dev, ABS_MT_PRESSURE, 0);
+			input_report_abs(touch_pdev->input_dev, ABS_PRESSURE, 255);
 			input_report_abs(touch_pdev->input_dev, BTN_TOUCH, 1);
 			input_mt_sync(touch_pdev->input_dev);
 			input_sync(touch_pdev->input_dev);
@@ -172,7 +172,7 @@ void Send_Touch( unsigned int x, unsigned int y)
 			input_report_abs(touch_pdev->input_dev, ABS_MT_TOUCH_MAJOR, 0);
 			input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_X, x);
 			input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_Y, y);
-			input_report_abs(touch_pdev->input_dev, ABS_MT_PRESSURE, 255);
+			input_report_abs(touch_pdev->input_dev, ABS_PRESSURE, 255);
 			input_report_abs(touch_pdev->input_dev, BTN_TOUCH, 1);
 			input_mt_sync(touch_pdev->input_dev);
 
@@ -525,7 +525,7 @@ static void multitouch_event(s8 state, s16 x, s16 y)
 		input_report_abs(touch_pdev->input_dev, ABS_MT_TOUCH_MAJOR, state);
 		input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_X, x);
 		input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_Y, y);
-		input_report_abs(touch_pdev->input_dev, ABS_MT_PRESSURE, 255);
+		input_report_abs(touch_pdev->input_dev, ABS_PRESSURE, 255);
 		input_report_abs(touch_pdev->input_dev, BTN_TOUCH, 1);
 		input_mt_sync(touch_pdev->input_dev);
 	}
