@@ -13,7 +13,7 @@ echo "Now compiling kernel, go get a soda! ;)"
 ARCH=arm CROSS_COMPILE=~/Android/CMR/prebuilt/linux-x86/toolchain/arm-eabi-4.4.3/bin/arm-eabi- make zImage -j4
 #
 if [ -f arch/arm/boot/zImage ]; then
-      echo "Plague has been compiled!!! You can find it in arcg/arm/boot/zImage"
+      echo "Plague has been compiled!!! You can find it in arch/arm/boot/zImage"
 else
       echo "Kernel did not compile, please check for errors!!"
 fi
