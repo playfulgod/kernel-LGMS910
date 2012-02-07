@@ -163,9 +163,9 @@ void Send_Touch( unsigned int x, unsigned int y)
 {
 			input_report_abs(touch_pdev->input_dev, ABS_MT_TOUCH_MAJOR, 1);
 			input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_X, x);
-			input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_Y, y);
+			input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_Y, y);	
 			input_report_abs(touch_pdev->input_dev, ABS_PRESSURE, 255);
-			input_report_abs(touch_pdev->input_dev, BTN_TOUCH, 1);
+			input_report_key(touch_pdev->input_dev, BTN_TOUCH, 1);
 			input_mt_sync(touch_pdev->input_dev);
 			input_sync(touch_pdev->input_dev);
 
@@ -173,9 +173,9 @@ void Send_Touch( unsigned int x, unsigned int y)
 			input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_X, x);
 			input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_Y, y);
 			input_report_abs(touch_pdev->input_dev, ABS_PRESSURE, 255);
-			input_report_abs(touch_pdev->input_dev, BTN_TOUCH, 1);
+			input_report_key(touch_pdev->input_dev, BTN_TOUCH, 1);
 			input_mt_sync(touch_pdev->input_dev);
-
+	 
 			input_sync(touch_pdev->input_dev);
 }
 EXPORT_SYMBOL(Send_Touch); 
@@ -526,7 +526,7 @@ static void multitouch_event(s8 state, s16 x, s16 y)
 		input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_X, x);
 		input_report_abs(touch_pdev->input_dev, ABS_MT_POSITION_Y, y);
 		input_report_abs(touch_pdev->input_dev, ABS_PRESSURE, 255);
-		input_report_abs(touch_pdev->input_dev, BTN_TOUCH, 1);
+		input_report_key(touch_pdev->input_dev, BTN_TOUCH, 1);
 		input_mt_sync(touch_pdev->input_dev);
 	}
 }
@@ -1208,12 +1208,14 @@ touch_i2c_probe(struct i2c_client *client, const struct i2c_device_id *id)
 #ifdef SINGLE_TOUCH
 	input_set_abs_params(touch_pdev->input_dev, ABS_X, 0, TOUCH_X_MAX, 0, 0);
 	input_set_abs_params(touch_pdev->input_dev, ABS_Y, 0, TOUCH_Y_MAX, 0, 0);
+	input_set_abs_params(touch_pdev->input_dev, ABS_PRESSURE, 0, 255, 0, 0);
 #endif
 
 /*dual touch */
 	set_bit(ABS_MT_TOUCH_MAJOR, 	 touch_pdev->input_dev->absbit);
 	input_set_abs_params(touch_pdev->input_dev, ABS_MT_POSITION_X, 0, TOUCH_X_MAX, 0, 0);
 	input_set_abs_params(touch_pdev->input_dev, ABS_MT_POSITION_Y, 0, TOUCH_Y_MAX, 0, 0);
+	input_set_abs_params(touch_pdev->input_dev, ABS_PRESSURE, 0, 255, 0, 0);
 
 	set_bit(EV_SYN, 	 touch_pdev->input_dev->evbit);
 	set_bit(EV_KEY, 	 touch_pdev->input_dev->evbit);
