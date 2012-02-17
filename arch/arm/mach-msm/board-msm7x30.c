@@ -5345,7 +5345,8 @@ static struct kgsl_platform_data kgsl_pdata = {
 
 static struct resource kgsl_resources[] = {
 	{
-		.name = "kgsl_reg_memory",
+//		.name = "kgsl_reg_memory",
+		.name = "kgsl_2D0_REG_MEMORY",
 		.start = 0xA3500000, /* 3D GRP address */
 		.end = 0xA351ffff,
 		.flags = IORESOURCE_MEM,

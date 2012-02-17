@@ -18,6 +18,7 @@
 
 #include <linux/types.h>
 #include <linux/spinlock.h>
+#include <linux/fih_hw_info.h> //SW252-rexer-hwid-01+
 
 struct smem_heap_info {
 	unsigned initialized;
