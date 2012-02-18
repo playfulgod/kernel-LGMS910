@@ -1997,6 +1997,11 @@ wl_iw_control_wl_on(
 	wl_iw_iscan_set_scan_broadcast_prep(dev, 0);
 #endif
 
+/* LGE_CHANGE_S [cheolsook.lee@lge.com] 2011-09-21, fixed reconnection issue when wakeup */
+	printf("%s : call net_os_set_suspend(resuming) \n", __func__);
+	net_os_set_suspend(dev, 0);
+/* LGE_CHANGE_E [cheolsook.lee@lge.com] 2011-09-21, fixed reconnection issue when wakeup */
+
 	WL_TRACE(("Exited %s \n", __FUNCTION__));
 
 	return ret;

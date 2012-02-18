@@ -8842,6 +8842,8 @@ int get_msm_cable_type(void)
 
 #ifdef CONFIG_LGE_ERS
 static uint32_t  *smem_sreset_hwreset =  NULL;
+static uint32_t  *smem_sreset_flag = NULL;
+static uint32_t  *smem_hw_reset_flag = NULL;
 
 static char *smem_sreset_log;
 static size_t smem_sreset_log_size;
@@ -8885,7 +8887,12 @@ static int check_smem_ers_status(void)
 	smem_sreset_hwreset = (uint32_t *)smem_alloc(SMEM_ID_VENDOR0, sizeof(uint64_t)*4);
 	if((smem_sreset_hwreset != NULL) && ((*smem_sreset_hwreset ) != 0))
 	{
+		smem_sreset_flag = (uint32_t *)smem_sreset_hwreset + 2;
+		smem_hw_reset_flag = (uint32_t *)smem_sreset_hwreset + 4;
+			
 		printk(KERN_INFO "smem_sreset_hwreset => addr : 0x%X, value : 0x%X\n", (int)smem_sreset_hwreset, *smem_sreset_hwreset);
+		printk(KERN_INFO "smem_sreset_flag => addr : 0x%X, value : 0x%X\n", (int)smem_sreset_flag, *smem_sreset_flag);
+		printk(KERN_INFO "smem_hw_reset_flag => addr : 0x%X, value : 0x%X\n", (int)smem_hw_reset_flag, *smem_hw_reset_flag);
 		smem_sreset_log = kzalloc(100, GFP_KERNEL);
 		if (smem_sreset_log == NULL) {
 			printk(KERN_ERR "smem_sreset_log allocation failed \n");
@@ -8915,6 +8922,9 @@ static int check_smem_ers_status(void)
 			}
 
 			*smem_sreset_hwreset = 0;
+			*smem_sreset_flag = 0x9A559A55;
+			*smem_hw_reset_flag = 0x9A559A55;
+
 			entry->proc_fops = &smem_sreset_file_ops;
 			entry->size = smem_sreset_log_size;
 			return 1;
@@ -8943,6 +8953,9 @@ static int check_smem_ers_status(void)
 			}
 
 			*smem_sreset_hwreset = 0;
+			*smem_sreset_flag = 0x9A559A55;
+			*smem_hw_reset_flag = 0x9A559A55;
+			
 			entry->proc_fops = &smem_sreset_file_ops;
 			entry->size = smem_sreset_log_size;
 			return 1;
